@@ -44,11 +44,6 @@ export function AdminRolesPermissions() {
     alert(`Edit role ${id}`);
   };
 
-  const handleDeleteRole = (id: number) => {
-    if (confirm('Delete this role?')) {
-      alert(`Role ${id} deleted`);
-    }
-  };
 
   return (
     <AdminLayout>

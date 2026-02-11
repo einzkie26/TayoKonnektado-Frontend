@@ -37,9 +37,6 @@ export function AdminInvoices() {
     alert(`Download invoice ${id}`);
   };
 
-  const handleSendReminder = (id: string) => {
-    alert(`Send payment reminder for ${id}`);
-  };
 
   return (
     <AdminLayout>

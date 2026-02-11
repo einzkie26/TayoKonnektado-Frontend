@@ -1,30 +1,30 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@/app/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/app/components/ui/card';
-import { Shield, Clock, Users, Zap, CheckCircle, Star, CreditCard, Headphones, FileText, Bell, Settings, BarChart } from 'lucide-react';
+import { Clock, Users, Zap, CheckCircle, CreditCard, Headphones, Bell, Settings, BarChart } from 'lucide-react';
 import { ScrollFade } from '@/app/components/ScrollFade';
 import { api } from '@/services/api';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import logo from '@/assets/logo.png';
 import rawr from '@/assets/rawr.png';
 import clouds from '@/assets/clouds.png';
 import tumbleweed from '@/assets/tumbleweed.png';
 
 export function Home() {
-  const [isConnected, setIsConnected] = useState(false);
-  const [connectionMessage, setConnectionMessage] = useState('Checking...');
+
+
 
   useEffect(() => {
     api.testConnection()
       .then(data => {
         console.log('Connection successful:', data);
-        setIsConnected(true);
-        setConnectionMessage(data.message);
+
+
       })
       .catch(error => {
         console.error('Connection failed:', error);
-        setIsConnected(false);
-        setConnectionMessage('Not connected - Check console');
+
+
       });
   }, []);
   const modules = [

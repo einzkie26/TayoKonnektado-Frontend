@@ -8,7 +8,7 @@ import { useState } from 'react';
 
 export function AdminActiveServices() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [services, setServices] = useState([
+  const [services] = useState([
     { id: 'SRV-001', customer: 'Juan Dela Cruz', service: 'Fiber 100 Mbps', status: 'Active', installDate: 'Jan 15, 2025', location: 'Manila' },
     { id: 'SRV-002', customer: 'Maria Santos', service: 'Fiber 200 Mbps', status: 'Active', installDate: 'Feb 1, 2025', location: 'Quezon City' },
     { id: 'SRV-003', customer: 'Pedro Garcia', service: 'Fiber 50 Mbps', status: 'Suspended', installDate: 'Dec 1, 2024', location: 'Makati' },
@@ -23,15 +23,7 @@ export function AdminActiveServices() {
     alert(`View service ${id}`);
   };
 
-  const handleSuspend = (id: string) => {
-    if (confirm('Suspend this service?')) {
-      setServices(services.map(s => s.id === id ? { ...s, status: 'Suspended' } : s));
-    }
-  };
 
-  const handleReactivate = (id: string) => {
-    setServices(services.map(s => s.id === id ? { ...s, status: 'Active' } : s));
-  };
 
   return (
     <AdminLayout>

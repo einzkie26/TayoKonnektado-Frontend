@@ -8,14 +8,7 @@ export function AdminServiceReports() {
     alert('Exporting service report...');
   };
 
-  const handleViewPlanDetails = (plan: string) => {
-    alert(`View details for ${plan}`);
-  };
-
-  const handleGenerateReport = () => {
-    alert('Generate custom report');
-  };
-  return (
+return (
     <AdminLayout>
       <div className="space-y-6">
         <div className="flex items-center justify-between">

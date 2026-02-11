@@ -1,5 +1,5 @@
 import { AdminLayout } from '@/app/components/AdminLayout';
-import { Card, CardContent, CardHeader, CardTitle } from '@/app/components/ui/card';
+import { Card, CardHeader, CardTitle } from '@/app/components/ui/card';
 import { Button } from '@/app/components/ui/button';
 import { Badge } from '@/app/components/ui/badge';
 import { Bell, CheckCircle, AlertCircle, Info, Trash2 } from 'lucide-react';
@@ -32,9 +32,6 @@ export function AdminNotifications() {
     }
   };
 
-  const handleMarkRead = (id: number) => {
-    alert(`Notification ${id} marked as read`);
-  };
 
   return (
     <AdminLayout>

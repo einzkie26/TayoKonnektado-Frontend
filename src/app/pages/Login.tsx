@@ -7,7 +7,7 @@ import { Lock, Mail } from 'lucide-react';
 import logo from '@/assets/logo.png';
 import loginImage from '@/images/login_right_side-photo.png';
 import { useGlow } from '@/app/context/GlowContext';
-import { api } from '@/services/api';
+
 import { useState } from 'react';
 
 export function Login() {
@@ -15,7 +15,7 @@ export function Login() {
   const { isGlowing, triggerGlow } = useGlow();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();

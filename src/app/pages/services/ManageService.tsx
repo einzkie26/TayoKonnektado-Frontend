@@ -8,7 +8,7 @@ export function ManageService() {
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
 
-  const handlePlanChange = (planName: string, type: string) => {
+  const handlePlanChange = (planName: string, _type: string) => {
     setSelectedPlan(planName);
     setShowConfirmation(true);
   };

@@ -41,13 +41,6 @@ export function AdminAssignTickets() {
     }
   };
 
-  const handleReassign = (ticketId: string) => {
-    handleAssign(ticketId);
-  };
-
-  const handleBulkAssign = () => {
-    alert('Bulk assign selected tickets');
-  };
 
   return (
     <AdminLayout>

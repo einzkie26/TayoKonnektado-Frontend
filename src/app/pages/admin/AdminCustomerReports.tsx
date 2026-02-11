@@ -1,20 +1,13 @@
 import { AdminLayout } from '@/app/components/AdminLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/app/components/ui/card';
 import { Button } from '@/app/components/ui/button';
-import { Download, Users, TrendingUp } from 'lucide-react';
+import { Download, TrendingUp } from 'lucide-react';
 
 export function AdminCustomerReports() {
   const handleExport = () => {
     alert('Exporting customer report...');
   };
 
-  const handleFilterByDate = () => {
-    alert('Filter by date range');
-  };
-
-  const handleViewDetails = (month: string) => {
-    alert(`View details for ${month}`);
-  };
   return (
     <AdminLayout>
       <div className="space-y-6">

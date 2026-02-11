@@ -1,7 +1,7 @@
 import { DashboardLayout } from '@/app/components/DashboardLayout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/app/components/ui/card';
 import { Button } from '@/app/components/ui/button';
-import { Download, FileText, Calendar, DollarSign } from 'lucide-react';
+import { Download, FileText, Calendar } from 'lucide-react';
 
 export function BillingReports() {
   const invoices = [

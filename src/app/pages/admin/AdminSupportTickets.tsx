@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/app/components/ui/ca
 import { Button } from '@/app/components/ui/button';
 import { Badge } from '@/app/components/ui/badge';
 import { Textarea } from '@/app/components/ui/textarea';
-import { MessageSquare, User, Clock } from 'lucide-react';
+import { User, Clock } from 'lucide-react';
 import { useState } from 'react';
 
 export function AdminSupportTickets() {

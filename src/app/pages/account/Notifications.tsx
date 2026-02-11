@@ -1,5 +1,5 @@
 import { DashboardLayout } from '@/app/components/DashboardLayout';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/app/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/app/components/ui/card';
 import { Button } from '@/app/components/ui/button';
 import { Label } from '@/app/components/ui/label';
 import { Bell, Mail, MessageSquare, DollarSign, Wifi, AlertCircle, Save } from 'lucide-react';

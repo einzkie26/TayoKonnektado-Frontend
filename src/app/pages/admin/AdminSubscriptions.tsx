@@ -24,15 +24,7 @@ export function AdminSubscriptions() {
     alert(`View subscription ${id}`);
   };
 
-  const handleRenew = (id: string) => {
-    alert(`Renew subscription ${id}`);
-  };
 
-  const handleCancel = (id: string) => {
-    if (confirm('Cancel this subscription?')) {
-      alert(`Subscription ${id} cancelled`);
-    }
-  };
 
   return (
     <AdminLayout>

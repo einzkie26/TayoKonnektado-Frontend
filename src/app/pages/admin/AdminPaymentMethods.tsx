@@ -16,15 +16,7 @@ export function AdminPaymentMethods() {
     alert(`View details for payment method ${id}`);
   };
 
-  const handleToggleStatus = (id: number) => {
-    alert(`Toggle status for payment method ${id}`);
-  };
-
-  const handleAddMethod = () => {
-    alert('Add new payment method');
-  };
-
-  return (
+return (
     <AdminLayout>
       <div className="space-y-6">
         <div>

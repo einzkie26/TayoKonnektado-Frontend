@@ -27,13 +27,6 @@ export function AdminServicePlans() {
     }
   };
 
-  const handleToggleStatus = (id: number) => {
-    setPlans(plans.map(p => 
-      p.id === id 
-        ? { ...p, status: p.status === 'Active' ? 'Inactive' : 'Active' }
-        : p
-    ));
-  };
 
   return (
     <AdminLayout>

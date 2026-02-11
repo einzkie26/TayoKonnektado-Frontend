@@ -4,7 +4,7 @@ import { Button } from '@/app/components/ui/button';
 import { Input } from '@/app/components/ui/input';
 import { Label } from '@/app/components/ui/label';
 import { Badge } from '@/app/components/ui/badge';
-import { UserPlus, Edit, Trash2, Shield } from 'lucide-react';
+import { UserPlus, Edit, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 
 export function AdminStaff() {

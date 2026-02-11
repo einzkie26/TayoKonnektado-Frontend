@@ -8,14 +8,7 @@ export function AdminRevenueReports() {
     alert('Exporting revenue report...');
   };
 
-  const handleFilterByPeriod = (period: string) => {
-    alert(`Filter by ${period}`);
-  };
-
-  const handleViewBreakdown = () => {
-    alert('View detailed breakdown');
-  };
-  return (
+return (
     <AdminLayout>
       <div className="space-y-6">
         <div className="flex items-center justify-between">

@@ -1,7 +1,7 @@
 import { DashboardLayout } from '@/app/components/DashboardLayout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/app/components/ui/card';
 import { Button } from '@/app/components/ui/button';
-import { Wifi, Activity, Calendar, Plus, QrCode } from 'lucide-react';
+import { Wifi, Plus, QrCode } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Input } from '@/app/components/ui/input';

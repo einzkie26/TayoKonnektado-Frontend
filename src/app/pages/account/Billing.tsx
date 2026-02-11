@@ -27,11 +27,11 @@ export function Billing() {
     setShowAddPayment(false);
   };
 
-  const handleSetDefault = (id: number) => {
+  const handleSetDefault = (_id: number) => {
     alert('Payment method set as default!');
   };
 
-  const handleRemove = (id: number) => {
+  const handleRemove = (_id: number) => {
     if (confirm('Are you sure you want to remove this payment method?')) {
       alert('Payment method removed!');
     }

@@ -21,17 +21,7 @@ export function AdminAccountDetails() {
     alert('Edit account functionality');
   };
 
-  const handleSuspend = () => {
-    if (confirm('Suspend this account?')) {
-      alert('Account suspended');
-    }
-  };
-
-  const handleResetPassword = () => {
-    alert('Password reset email sent');
-  };
-
-  return (
+return (
     <AdminLayout>
       <div className="space-y-6">
         <div className="flex items-center justify-between">

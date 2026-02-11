@@ -35,9 +35,6 @@ export function AdminStaffAccounts() {
     }
   };
 
-  const handleResetPassword = (id: string) => {
-    alert(`Password reset for ${id}`);
-  };
 
   return (
     <AdminLayout>

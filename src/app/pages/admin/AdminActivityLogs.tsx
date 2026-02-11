@@ -36,15 +36,7 @@ export function AdminActivityLogs() {
     alert('Exporting logs to CSV...');
   };
 
-  const handleFilter = (type: string) => {
-    alert(`Filter by ${type}`);
-  };
 
-  const handleClearLogs = () => {
-    if (confirm('Clear old logs? This cannot be undone.')) {
-      alert('Logs cleared');
-    }
-  };
 
   return (
     <AdminLayout>
