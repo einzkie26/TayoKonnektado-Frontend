@@ -15,7 +15,7 @@ export function Header() {
           <img src={logo} alt="TayoKonnektado Logo" className={`h-16 w-16 object-contain transition-all duration-500 ${
             isGlowing ? 'drop-shadow-[0_0_15px_rgba(37,99,235,0.8)]' : ''
           }`} />
-          <span className={`text-2xl font-bold transition-colors duration-500 ${
+          <span className={`text-2xl font-bold transition-colors duration-500 hidden md:block ${
             isGlowing ? 'text-white' : 'text-[#003366]'
           }`}>TayoKonnektado</span>
         </Link>

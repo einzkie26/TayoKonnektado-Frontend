@@ -105,7 +105,7 @@ export function Billing() {
               {paymentMethods.map((method) => (
                 <div
                   key={method.id}
-                  className={`p-4 rounded-lg border-2 flex items-center justify-between ${
+                  className={`p-4 rounded-lg border-2 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 ${
                     method.isDefault
                       ? 'border-[#003366] bg-[#E6F0FF]'
                       : 'border-gray-200 bg-white'
@@ -257,8 +257,8 @@ export function Billing() {
 
       {/* Pay Now Modal */}
       {showPayNow && (
-        <div className="fixed inset-0 bg-black/85 flex items-center justify-center z-50">
-          <Card className="w-full max-w-md mx-4 bg-white">
+        <div className="fixed inset-0 bg-black/85 flex items-center justify-center z-50 p-4">
+          <Card className="w-full max-w-md bg-white max-h-[90vh] overflow-y-auto">
             <CardHeader>
               <CardTitle className="text-[#003366]">Pay Now</CardTitle>
               <CardDescription>Amount Due: ₱1,299.00</CardDescription>
@@ -290,7 +290,7 @@ export function Billing() {
                   </div>
                 </button>
               </div>
-              <div className="flex gap-3">
+              <div className="flex flex-col sm:flex-row gap-3">
                 <Button onClick={handlePayNow} className="flex-1 bg-[#003366] hover:bg-[#00509E]">
                   Confirm Payment
                 </Button>
@@ -305,8 +305,8 @@ export function Billing() {
 
       {/* Add Payment Method Modal */}
       {showAddPayment && (
-        <div className="fixed inset-0 bg-black/85 flex items-center justify-center z-50">
-          <Card className="w-full max-w-md mx-4 bg-white">
+        <div className="fixed inset-0 bg-black/85 flex items-center justify-center z-50 p-4">
+          <Card className="w-full max-w-md bg-white max-h-[90vh] overflow-y-auto">
             <CardHeader>
               <CardTitle className="text-[#003366]">Add Payment Method</CardTitle>
               <CardDescription>Add a new payment option</CardDescription>
@@ -326,7 +326,7 @@ export function Billing() {
                   <Input id="cvv" placeholder="123" className="mt-2" />
                 </div>
               </div>
-              <div className="flex gap-3">
+              <div className="flex flex-col sm:flex-row gap-3">
                 <Button onClick={handleAddPayment} className="flex-1 bg-[#003366] hover:bg-[#00509E]">
                   Add Card
                 </Button>

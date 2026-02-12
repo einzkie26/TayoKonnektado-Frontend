@@ -135,7 +135,7 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
             </Button>
             <Link to="/admin/dashboard" className="flex items-center gap-3">
               <img src={logo} alt="TayoKonnektado Logo" className="h-10 object-contain" />
-              <div className="hidden sm:block">
+              <div className="hidden md:block">
                 <span className="text-xl font-bold text-white block">TayoKonnektado</span>
                 <span className="text-xs text-blue-200">Admin Portal</span>
               </div>

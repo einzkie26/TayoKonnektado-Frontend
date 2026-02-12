@@ -50,24 +50,24 @@ export function OrderHistory() {
             <p className="text-gray-600">View all your past orders and transactions</p>
           </div>
           <Button variant="outline" className="border-[#003366] text-[#003366]">
-            <Download size={16} className="mr-2" />
-            Export History
+            <Download size={16} className="sm:mr-2" />
+            <span className="hidden sm:inline">Export History</span>
           </Button>
         </div>
 
         <div className="space-y-4">
           {orders.map((order) => (
             <Card key={order.id} className="hover:shadow-lg transition-shadow">
-              <CardContent className="p-6">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-[#E6F0FF] rounded-full flex items-center justify-center flex-shrink-0">
-                      <Package className="text-[#003366]" size={24} />
+              <CardContent className="p-4 sm:p-6">
+                <div className="flex flex-col gap-4">
+                  <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#E6F0FF] rounded-full flex items-center justify-center flex-shrink-0">
+                      <Package className="text-[#003366]" size={20} />
                     </div>
-                    <div>
-                      <h3 className="font-semibold text-[#003366] mb-1">{order.service}</h3>
-                      <div className="flex items-center gap-4 text-sm text-gray-500">
-                        <span>Order ID: {order.id}</span>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-semibold text-[#003366] mb-1 text-sm sm:text-base">{order.service}</h3>
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 text-xs sm:text-sm text-gray-500">
+                        <span className="truncate">Order ID: {order.id}</span>
                         <span className="flex items-center gap-1">
                           <Clock size={14} />
                           {order.date}
@@ -75,17 +75,19 @@ export function OrderHistory() {
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-4">
-                    <div className="text-right">
-                      <p className="text-2xl font-bold text-[#003366]">{order.amount}</p>
+                  <div className="flex items-center justify-between gap-2">
+                    <div>
+                      <p className="text-xl sm:text-2xl font-bold text-[#003366]">{order.amount}</p>
                     </div>
-                    <span className={`px-4 py-2 bg-${order.statusColor}-100 text-${order.statusColor}-700 rounded-full font-semibold text-sm flex items-center gap-2 whitespace-nowrap`}>
-                      <CheckCircle size={16} />
-                      {order.status}
-                    </span>
-                    <Button variant="outline" size="sm" className="border-[#003366] text-[#003366]" onClick={() => setSelectedOrder(order)}>
-                      View Details
-                    </Button>
+                    <div className="flex items-center gap-2">
+                      <span className={`px-2 sm:px-4 py-1 sm:py-2 bg-${order.statusColor}-100 text-${order.statusColor}-700 rounded-full font-semibold text-xs sm:text-sm flex items-center gap-1 sm:gap-2`}>
+                        <CheckCircle size={14} />
+                        <span className="hidden sm:inline">{order.status}</span>
+                      </span>
+                      <Button variant="outline" size="sm" className="border-[#003366] text-[#003366] text-xs" onClick={() => setSelectedOrder(order)}>
+                        View
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </CardContent>
@@ -96,8 +98,8 @@ export function OrderHistory() {
 
       {/* Order Details Modal */}
       {selectedOrder && (
-        <div className="fixed inset-0 bg-black/85 flex items-center justify-center z-50">
-          <Card className="w-full max-w-md mx-4 bg-white">
+        <div className="fixed inset-0 bg-black/85 flex items-center justify-center z-50 p-4">
+          <Card className="w-full max-w-md bg-white max-h-[90vh] overflow-y-auto">
             <CardHeader>
               <CardTitle className="text-[#003366]">Order Details</CardTitle>
             </CardHeader>

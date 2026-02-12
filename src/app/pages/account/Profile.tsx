@@ -21,14 +21,14 @@ export function Profile() {
 
         {/* Profile Header */}
         <Card className="bg-gradient-to-br from-[#003366] to-[#00509E] text-white">
-          <CardContent className="p-8">
-            <div className="flex items-center gap-6">
-              <div className="w-24 h-24 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-4xl font-bold">
+          <CardContent className="p-6 md:p-8">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
+              <div className="w-20 h-20 sm:w-24 sm:h-24 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-3xl sm:text-4xl font-bold flex-shrink-0">
                 JD
               </div>
-              <div>
-                <h2 className="text-2xl font-bold mb-1">Juan Dela Cruz</h2>
-                <p className="text-blue-100 mb-2">Customer ID: CUST-2025-00145</p>
+              <div className="text-center sm:text-left">
+                <h2 className="text-xl sm:text-2xl font-bold mb-1">Juan Dela Cruz</h2>
+                <p className="text-blue-100 mb-2 text-sm sm:text-base">Customer ID: CUST-2025-00145</p>
                 <span className="px-3 py-1 bg-green-500 text-white text-sm font-semibold rounded-full">
                   Active Member
                 </span>

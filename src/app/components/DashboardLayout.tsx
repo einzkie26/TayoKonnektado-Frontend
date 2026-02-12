@@ -119,7 +119,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
             </Button>
             <Link to="/dashboard" className="flex items-center gap-3">
               <img src={logo} alt="TayoKonnektado Logo" className="h-10 object-contain" />
-              <span className="text-xl font-bold text-[#003366] hidden sm:block">TayoKonnektado</span>
+              <span className="text-xl font-bold text-[#003366] hidden md:block">TayoKonnektado</span>
             </Link>
           </div>
 

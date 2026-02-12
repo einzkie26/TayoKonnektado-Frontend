@@ -84,8 +84,8 @@ export function ActiveServices() {
 
       {/* Service Details Modal */}
       {showDetails && (
-        <div className="fixed inset-0 bg-black/85 flex items-center justify-center z-50">
-          <Card className="w-full max-w-md mx-4 bg-white">
+        <div className="fixed inset-0 bg-black/85 flex items-center justify-center z-50 p-4">
+          <Card className="w-full max-w-md bg-white max-h-[90vh] overflow-y-auto">
             <CardHeader>
               <CardTitle className="text-[#003366]">Service Details</CardTitle>
               <CardDescription>Fiber 100 Mbps Plan</CardDescription>
@@ -131,8 +131,8 @@ export function ActiveServices() {
 
       {/* Add Service Modal */}
       {showAddService && (
-        <div className="fixed inset-0 bg-black/85 flex items-center justify-center z-50">
-          <Card className="w-full max-w-md mx-4 bg-white">
+        <div className="fixed inset-0 bg-black/85 flex items-center justify-center z-50 p-4">
+          <Card className="w-full max-w-md bg-white max-h-[90vh] overflow-y-auto">
             <CardHeader>
               <CardTitle className="text-[#003366]">Add Service</CardTitle>
               <CardDescription>Select service type to add</CardDescription>
@@ -177,7 +177,7 @@ export function ActiveServices() {
                       Scan QR Code
                     </Button>
                   </div>
-                  <div className="flex gap-3">
+                  <div className="flex flex-col sm:flex-row gap-3">
                     <Button onClick={handleAddService} className="flex-1 bg-[#003366] hover:bg-[#00509E]">
                       Add Service
                     </Button>
@@ -198,7 +198,7 @@ export function ActiveServices() {
                       onChange={(e) => setPhoneNumber(e.target.value)}
                     />
                   </div>
-                  <div className="flex gap-3">
+                  <div className="flex flex-col sm:flex-row gap-3">
                     <Button onClick={handleAddService} className="flex-1 bg-[#003366] hover:bg-[#00509E]">
                       Add Service
                     </Button>

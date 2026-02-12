@@ -4,15 +4,20 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/app
 import { Clock, Users, Zap, CheckCircle, CreditCard, Headphones, Bell, Settings, BarChart } from 'lucide-react';
 import { ScrollFade } from '@/app/components/ScrollFade';
 import { api } from '@/services/api';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import logo from '@/assets/logo.png';
 import rawr from '@/assets/rawr.png';
 import clouds from '@/assets/clouds.png';
 import tumbleweed from '@/assets/tumbleweed.png';
 
 export function Home() {
+  const [scrollY, setScrollY] = useState(0);
 
-
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     api.testConnection()
@@ -99,9 +104,9 @@ export function Home() {
   return (
     <div className="w-full">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-slate-800 via-blue-900 to-slate-900 text-white py-20 overflow-hidden transition-transform duration-500 hover:scale-[1.02]">
+      <section className="relative bg-gradient-to-br from-slate-800 via-blue-900 to-slate-900 text-white py-20 overflow-hidden">
+        <div className="absolute inset-0" style={{ transform: `translateY(${scrollY * 0.5}px)` }}>
         <img src={logo} alt="Logo" className="absolute top-8 right-8 w-64 h-64 object-contain opacity-20 z-20" />
-        <div className="absolute inset-0">
           {/* Static stars */}
           <div className="absolute top-[10%] left-[15%] w-1 h-1 bg-white rounded-full animate-pulse"></div>
           <div className="absolute top-[20%] left-[25%] w-0.5 h-0.5 bg-white rounded-full opacity-60 animate-pulse" style={{animationDelay: '0.5s'}}></div>
@@ -315,8 +320,31 @@ export function Home() {
 
       {/* How It Works Section */}
       <ScrollFade>
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
+      <section className="relative bg-gradient-to-br from-slate-800 via-blue-900 to-slate-900 text-white py-16 overflow-hidden">
+        <div className="absolute inset-0" style={{ transform: `translateY(${scrollY * 0.3}px)` }}>
+          {/* Static stars */}
+          <div className="absolute top-[10%] left-[15%] w-1 h-1 bg-white rounded-full animate-pulse"></div>
+          <div className="absolute top-[20%] left-[25%] w-0.5 h-0.5 bg-white rounded-full opacity-60 animate-pulse" style={{animationDelay: '0.5s'}}></div>
+          <div className="absolute top-[15%] left-[45%] w-1 h-1 bg-white rounded-full animate-pulse" style={{animationDelay: '1s'}}></div>
+          <div className="absolute top-[25%] left-[65%] w-0.5 h-0.5 bg-white rounded-full opacity-60 animate-pulse" style={{animationDelay: '1.5s'}}></div>
+          <div className="absolute top-[30%] left-[80%] w-1 h-1 bg-white rounded-full animate-pulse" style={{animationDelay: '2s'}}></div>
+          <div className="absolute top-[40%] left-[10%] w-0.5 h-0.5 bg-white rounded-full opacity-60 animate-pulse" style={{animationDelay: '0.8s'}}></div>
+          <div className="absolute top-[50%] left-[30%] w-1 h-1 bg-white rounded-full animate-pulse" style={{animationDelay: '1.3s'}}></div>
+          <div className="absolute top-[60%] left-[50%] w-0.5 h-0.5 bg-white rounded-full opacity-60 animate-pulse" style={{animationDelay: '1.8s'}}></div>
+          <div className="absolute top-[55%] left-[70%] w-1 h-1 bg-white rounded-full animate-pulse" style={{animationDelay: '0.3s'}}></div>
+          <div className="absolute top-[70%] left-[85%] w-0.5 h-0.5 bg-white rounded-full opacity-60 animate-pulse" style={{animationDelay: '2.3s'}}></div>
+          <div className="absolute top-[75%] left-[20%] w-1 h-1 bg-white rounded-full animate-pulse" style={{animationDelay: '1.1s'}}></div>
+          <div className="absolute top-[80%] left-[40%] w-0.5 h-0.5 bg-white rounded-full opacity-60 animate-pulse" style={{animationDelay: '1.6s'}}></div>
+          <div className="absolute top-[85%] left-[60%] w-1 h-1 bg-white rounded-full animate-pulse" style={{animationDelay: '0.6s'}}></div>
+          <div className="absolute top-[90%] left-[75%] w-0.5 h-0.5 bg-white rounded-full opacity-60 animate-pulse" style={{animationDelay: '2.1s'}}></div>
+          <div className="absolute top-[35%] left-[35%] w-1 h-1 bg-white rounded-full animate-pulse" style={{animationDelay: '1.4s'}}></div>
+          <div className="absolute top-[45%] left-[55%] w-0.5 h-0.5 bg-white rounded-full opacity-60 animate-pulse" style={{animationDelay: '0.9s'}}></div>
+          <div className="absolute top-[65%] left-[15%] w-1 h-1 bg-white rounded-full animate-pulse" style={{animationDelay: '1.9s'}}></div>
+          <div className="absolute top-[12%] left-[90%] w-0.5 h-0.5 bg-white rounded-full opacity-60 animate-pulse" style={{animationDelay: '0.4s'}}></div>
+          <div className="absolute top-[48%] left-[92%] w-1 h-1 bg-white rounded-full animate-pulse" style={{animationDelay: '1.7s'}}></div>
+          <div className="absolute top-[78%] left-[8%] w-0.5 h-0.5 bg-white rounded-full opacity-60 animate-pulse" style={{animationDelay: '2.2s'}}></div>
+        </div>
+        <div className="container mx-auto px-4 relative z-10">
           <h2 className="text-4xl text-center mb-12">How It Works</h2>
           <div className="grid md:grid-cols-4 gap-6 max-w-6xl mx-auto">
             {[
@@ -325,15 +353,15 @@ export function Home() {
               { step: '3', title: 'Manage Services', description: 'View bills, make payments, request support, and more' },
               { step: '4', title: 'Stay Updated', description: 'Receive notifications and track all your activities' }
             ].map((item, index) => (
-              <Card key={index} className="text-center">
+              <Card key={index} className="text-center bg-blue-900/95 group">
                 <CardHeader>
-                  <div className="w-16 h-16 bg-[#003366] text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+                  <div className="w-16 h-16 bg-yellow-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4 group-hover:animate-pulse">
                     {item.step}
                   </div>
-                  <CardTitle className="text-lg">{item.title}</CardTitle>
+                  <CardTitle className="text-lg text-white">{item.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-600">{item.description}</p>
+                  <p className="text-gray-200">{item.description}</p>
                 </CardContent>
               </Card>
             ))}

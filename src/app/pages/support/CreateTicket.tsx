@@ -59,32 +59,30 @@ export function CreateTicket() {
               <CardDescription>Fill in the information below to submit your request</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              {/* Category Selection */}
               <div>
                 <Label className="text-[#003366] mb-3 block font-semibold">Issue Category *</Label>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {categories.map((cat) => (
                     <button
                       key={cat.value}
                       type="button"
                       onClick={() => setCategory(cat.value)}
-                      className={`p-4 rounded-lg border-2 text-left transition-all ${
+                      className={`p-3 sm:p-4 rounded-lg border-2 text-left transition-all ${
                         category === cat.value
                           ? 'border-[#003366] bg-[#E6F0FF]'
                           : 'border-gray-200 hover:border-[#003366] hover:bg-gray-50'
                       }`}
                     >
-                      <p className="font-semibold text-[#003366] mb-1">{cat.label}</p>
+                      <p className="font-semibold text-[#003366] mb-1 text-sm sm:text-base">{cat.label}</p>
                       <p className="text-xs text-gray-600">{cat.description}</p>
                     </button>
                   ))}
                 </div>
               </div>
 
-              {/* Priority Level */}
               <div>
                 <Label className="text-[#003366] mb-3 block font-semibold">Priority Level *</Label>
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-3 gap-2 sm:gap-3">
                   {[
                     { value: 'low', label: 'Low', color: 'green' },
                     { value: 'medium', label: 'Medium', color: 'yellow' },
@@ -94,13 +92,13 @@ export function CreateTicket() {
                       key={p.value}
                       type="button"
                       onClick={() => setPriority(p.value)}
-                      className={`p-3 rounded-lg border-2 transition-all ${
+                      className={`p-2 sm:p-3 rounded-lg border-2 transition-all ${
                         priority === p.value
                           ? 'border-[#003366] bg-[#E6F0FF]'
                           : 'border-gray-200 hover:border-[#003366]'
                       }`}
                     >
-                      <span className="font-semibold text-[#003366]">{p.label}</span>
+                      <span className="font-semibold text-[#003366] text-sm sm:text-base">{p.label}</span>
                     </button>
                   ))}
                 </div>
@@ -170,7 +168,7 @@ export function CreateTicket() {
               </div>
 
               {/* Submit Button */}
-              <div className="flex gap-3 pt-4">
+              <div className="flex flex-col sm:flex-row gap-3 pt-4">
                 <Button type="submit" className="bg-[#003366] hover:bg-[#00509E] flex-1">
                   <Send size={16} className="mr-2" />
                   Submit Ticket

@@ -165,8 +165,8 @@ export function AdminSupportTickets() {
         </Card>
 
         {selectedTicket && !showReply && (
-          <div className="fixed inset-0 bg-black/85 flex items-center justify-center z-50">
-            <Card className="w-full max-w-md mx-4 bg-white">
+          <div className="fixed inset-0 bg-black/85 flex items-center justify-center z-50 p-4">
+            <Card className="w-full max-w-md bg-white max-h-[90vh] overflow-y-auto">
               <CardHeader>
                 <CardTitle className="text-[#003366]">Assign Ticket</CardTitle>
               </CardHeader>
@@ -186,7 +186,7 @@ export function AdminSupportTickets() {
                     ))}
                   </select>
                 </div>
-                <div className="flex gap-3">
+                <div className="flex flex-col sm:flex-row gap-3">
                   <Button onClick={() => handleAssign(selectedTicket.id)} className="flex-1 bg-[#003366] hover:bg-[#00509E]">
                     Assign
                   </Button>
@@ -200,8 +200,8 @@ export function AdminSupportTickets() {
         )}
 
         {showReply && selectedTicket && (
-          <div className="fixed inset-0 bg-black/85 flex items-center justify-center z-50">
-            <Card className="w-full max-w-md mx-4 bg-white">
+          <div className="fixed inset-0 bg-black/85 flex items-center justify-center z-50 p-4">
+            <Card className="w-full max-w-md bg-white max-h-[90vh] overflow-y-auto">
               <CardHeader>
                 <CardTitle className="text-[#003366]">Reply to Ticket</CardTitle>
               </CardHeader>
@@ -216,7 +216,7 @@ export function AdminSupportTickets() {
                     onChange={(e) => setReplyText(e.target.value)}
                   />
                 </div>
-                <div className="flex gap-3">
+                <div className="flex flex-col sm:flex-row gap-3">
                   <Button onClick={handleReply} className="flex-1 bg-[#003366] hover:bg-[#00509E]">
                     Send Reply
                   </Button>

@@ -3,13 +3,14 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/app/components/ui/ca
 import { Button } from '@/app/components/ui/button';
 import { Input } from '@/app/components/ui/input';
 import { Badge } from '@/app/components/ui/badge';
-import { Search, Eye, Edit, Trash2 } from 'lucide-react';
+import { Search, Eye, Edit, Trash2, MoreVertical } from 'lucide-react';
 import { useState } from 'react';
 
 export function AdminCustomers() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCustomer, setSelectedCustomer] = useState<any>(null);
   const [showDetails, setShowDetails] = useState(false);
+  const [showActions, setShowActions] = useState<string | null>(null);
 
   const customers = [
     { id: 'CUST-001', name: 'Juan Dela Cruz', email: 'juan@example.com', plan: 'Fiber 100 Mbps', status: 'Active', balance: '₱0.00' },
@@ -85,16 +86,34 @@ export function AdminCustomers() {
                       </td>
                       <td className="px-2 sm:px-4 py-3 font-semibold text-gray-800 text-xs sm:text-sm hidden md:table-cell">{customer.balance}</td>
                       <td className="px-2 sm:px-4 py-3">
-                        <div className="flex items-center gap-1 sm:gap-2">
+                        <div className="hidden sm:flex items-center gap-2">
                           <Button variant="ghost" size="sm" onClick={() => handleViewDetails(customer)}>
                             <Eye size={16} />
                           </Button>
-                          <Button variant="ghost" size="sm" className="hidden sm:inline-flex">
+                          <Button variant="ghost" size="sm">
                             <Edit size={16} />
                           </Button>
-                          <Button variant="ghost" size="sm" className="text-red-600 hidden sm:inline-flex" onClick={() => handleDelete(customer.id)}>
+                          <Button variant="ghost" size="sm" className="text-red-600" onClick={() => handleDelete(customer.id)}>
                             <Trash2 size={16} />
                           </Button>
+                        </div>
+                        <div className="sm:hidden relative">
+                          <Button variant="ghost" size="sm" onClick={() => setShowActions(showActions === customer.id ? null : customer.id)}>
+                            <MoreVertical size={16} />
+                          </Button>
+                          {showActions === customer.id && (
+                            <div className="absolute right-0 top-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-10 min-w-[120px]">
+                              <button onClick={() => { handleViewDetails(customer); setShowActions(null); }} className="w-full px-4 py-2 text-left text-sm hover:bg-gray-50 flex items-center gap-2">
+                                <Eye size={14} /> View
+                              </button>
+                              <button onClick={() => setShowActions(null)} className="w-full px-4 py-2 text-left text-sm hover:bg-gray-50 flex items-center gap-2">
+                                <Edit size={14} /> Edit
+                              </button>
+                              <button onClick={() => { handleDelete(customer.id); setShowActions(null); }} className="w-full px-4 py-2 text-left text-sm hover:bg-gray-50 flex items-center gap-2 text-red-600">
+                                <Trash2 size={14} /> Delete
+                              </button>
+                            </div>
+                          )}
                         </div>
                       </td>
                     </tr>
@@ -106,8 +125,8 @@ export function AdminCustomers() {
         </Card>
 
         {showDetails && selectedCustomer && (
-          <div className="fixed inset-0 bg-black/85 flex items-center justify-center z-50">
-            <Card className="w-full max-w-2xl mx-4 bg-white">
+          <div className="fixed inset-0 bg-black/85 flex items-center justify-center z-50 p-4">
+            <Card className="w-full max-w-2xl bg-white max-h-[90vh] overflow-y-auto">
               <CardHeader>
                 <CardTitle className="text-[#003366]">Customer Details</CardTitle>
               </CardHeader>
