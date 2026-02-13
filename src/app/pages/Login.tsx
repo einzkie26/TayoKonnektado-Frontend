@@ -3,7 +3,7 @@ import { Button } from '@/app/components/ui/button';
 import { Input } from '@/app/components/ui/input';
 import { Label } from '@/app/components/ui/label';
 import { Checkbox } from '@/app/components/ui/checkbox';
-import { Lock, Mail } from 'lucide-react';
+import { Lock, Mail, Eye, EyeOff } from 'lucide-react';
 import logo from '@/assets/logo.png';
 import loginImage from '@/images/login_right_side-photo.png';
 import { useGlow } from '@/app/context/GlowContext';
@@ -15,6 +15,7 @@ export function Login() {
   const { isGlowing, triggerGlow } = useGlow();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
 
   const handleSignIn = async (e: React.FormEvent) => {
@@ -24,6 +25,10 @@ export function Login() {
     if (email.toLowerCase() === 'admin@gmail.com' && password.toLowerCase() === 'admin') {
       setTimeout(() => {
         navigate('/admin/dashboard');
+      }, 300);
+    } else if (email.toLowerCase() === 'staff@gmail.com' && password.toLowerCase() === 'staff') {
+      setTimeout(() => {
+        navigate('/staff/dashboard');
       }, 300);
     } else {
       // Allow login with any credentials since this is frontend only
@@ -76,12 +81,19 @@ export function Login() {
                 <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
                 <Input
                   id="password"
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   placeholder="Enter your password"
-                  className="pl-10 h-12 border-gray-300 focus:border-[#003366] focus:ring-[#003366]"
+                  className="pl-10 pr-10 h-12 border-gray-300 focus:border-[#003366] focus:ring-[#003366]"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                >
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
               </div>
             </div>
 

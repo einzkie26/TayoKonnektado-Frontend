@@ -41,6 +41,9 @@ import { AdminServicePlans } from '@/app/pages/admin/AdminServicePlans';
 import { AdminServiceReports } from '@/app/pages/admin/AdminServiceReports';
 import { AdminStaffAccounts } from '@/app/pages/admin/AdminStaffAccounts';
 import { AdminSubscriptions } from '@/app/pages/admin/AdminSubscriptions';
+import { StaffDashboard } from '@/app/pages/staff/StaffDashboard';
+import { StaffTickets } from '@/app/pages/staff/StaffTickets';
+import { StaffOrders } from '@/app/pages/staff/StaffOrders';
 
 export const router = createBrowserRouter([
   {
@@ -152,5 +155,17 @@ export const router = createBrowserRouter([
   {
     path: '/admin/system/notifications',
     Component: AdminNotifications,
+  },
+  {
+    path: '/staff/dashboard',
+    Component: StaffDashboard,
+  },
+  {
+    path: '/staff/tickets',
+    Component: StaffTickets,
+  },
+  {
+    path: '/staff/orders',
+    Component: StaffOrders,
   },
 ]);
