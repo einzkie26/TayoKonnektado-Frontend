@@ -1,27 +1,45 @@
 import { AdminLayout } from '@/app/components/AdminLayout';
-import { Card, CardContent, CardHeader } from '@/app/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/app/components/ui/card';
 import { Button } from '@/app/components/ui/button';
 import { Badge } from '@/app/components/ui/badge';
 import { Input } from '@/app/components/ui/input';
-import { Search, Eye } from 'lucide-react';
+import { Label } from '@/app/components/ui/label';
+import { Search, Eye, Edit, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 
 export function AdminSubscriptions() {
   const [searchTerm, setSearchTerm] = useState('');
-
-  const subscriptions = [
+  const [selectedSub, setSelectedSub] = useState<any>(null);
+  const [showEdit, setShowEdit] = useState(false);
+  const [subscriptions, setSubscriptions] = useState([
     { id: 'SUB-001', customer: 'Juan Dela Cruz', plan: 'Fiber 100 Mbps', status: 'Active', startDate: 'Jan 15, 2025', endDate: 'Jan 15, 2026', amount: '₱1,299.00' },
     { id: 'SUB-002', customer: 'Maria Santos', plan: 'Fiber 200 Mbps', status: 'Active', startDate: 'Feb 1, 2025', endDate: 'Feb 1, 2026', amount: '₱1,899.00' },
     { id: 'SUB-003', customer: 'Pedro Garcia', plan: 'Fiber 50 Mbps', status: 'Expired', startDate: 'Dec 1, 2024', endDate: 'Dec 1, 2025', amount: '₱999.00' },
-  ];
+  ]);
 
   const filteredSubscriptions = subscriptions.filter(s =>
     s.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
     s.id.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleView = (id: string) => {
-    alert(`View subscription ${id}`);
+  const handleView = (sub: any) => {
+    setSelectedSub(sub);
+    setShowEdit(true);
+  };
+
+  const handleDelete = (id: string) => {
+    if (confirm('Are you sure you want to delete this subscription?')) {
+      setSubscriptions(subscriptions.filter(s => s.id !== id));
+      alert(`Subscription ${id} deleted!`);
+    }
+  };
+
+  const handleSaveEdit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubscriptions(subscriptions.map(s => s.id === selectedSub.id ? selectedSub : s));
+    alert('Subscription updated successfully!');
+    setShowEdit(false);
+    setSelectedSub(null);
   };
 
 
@@ -79,9 +97,17 @@ export function AdminSubscriptions() {
                         </Badge>
                       </td>
                       <td className="px-4 py-3">
-                        <Button variant="ghost" size="sm" onClick={() => handleView(sub.id)}>
-                          <Eye size={16} />
-                        </Button>
+                        <div className="flex items-center gap-2">
+                          <Button variant="ghost" size="sm" onClick={() => handleView(sub)}>
+                            <Eye size={16} />
+                          </Button>
+                          <Button variant="ghost" size="sm" onClick={() => { setSelectedSub(sub); setShowEdit(true); }}>
+                            <Edit size={16} />
+                          </Button>
+                          <Button variant="ghost" size="sm" className="text-red-600" onClick={() => handleDelete(sub.id)}>
+                            <Trash2 size={16} />
+                          </Button>
+                        </div>
                       </td>
                     </tr>
                   ))}
@@ -108,7 +134,7 @@ export function AdminSubscriptions() {
                       <p>Start: {sub.startDate}</p>
                       <p>End: {sub.endDate}</p>
                     </div>
-                    <Button variant="ghost" size="sm" onClick={() => handleView(sub.id)}>
+                    <Button variant="ghost" size="sm" onClick={() => handleView(sub)}>
                       <Eye size={16} />
                     </Button>
                   </div>
@@ -117,6 +143,83 @@ export function AdminSubscriptions() {
             </div>
           </CardContent>
         </Card>
+
+        {showEdit && selectedSub && (
+          <div className="fixed inset-0 bg-black/85 flex items-center justify-center z-50 p-4">
+            <Card className="w-full max-w-2xl bg-white max-h-[90vh] overflow-y-auto">
+              <CardHeader>
+                <CardTitle className="text-[#003366]">Manage Subscription</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleSaveEdit} className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <Label className="text-[#003366] font-semibold">Customer</Label>
+                      <Input
+                        value={selectedSub.customer}
+                        onChange={(e) => setSelectedSub({...selectedSub, customer: e.target.value})}
+                        className="mt-2"
+                        disabled
+                      />
+                    </div>
+                    <div>
+                      <Label className="text-[#003366] font-semibold">Plan</Label>
+                      <Input
+                        value={selectedSub.plan}
+                        onChange={(e) => setSelectedSub({...selectedSub, plan: e.target.value})}
+                        className="mt-2"
+                      />
+                    </div>
+                    <div>
+                      <Label className="text-[#003366] font-semibold">Start Date</Label>
+                      <Input
+                        value={selectedSub.startDate}
+                        onChange={(e) => setSelectedSub({...selectedSub, startDate: e.target.value})}
+                        className="mt-2"
+                      />
+                    </div>
+                    <div>
+                      <Label className="text-[#003366] font-semibold">End Date</Label>
+                      <Input
+                        value={selectedSub.endDate}
+                        onChange={(e) => setSelectedSub({...selectedSub, endDate: e.target.value})}
+                        className="mt-2"
+                      />
+                    </div>
+                    <div>
+                      <Label className="text-[#003366] font-semibold">Amount</Label>
+                      <Input
+                        value={selectedSub.amount}
+                        onChange={(e) => setSelectedSub({...selectedSub, amount: e.target.value})}
+                        className="mt-2"
+                      />
+                    </div>
+                    <div>
+                      <Label className="text-[#003366] font-semibold">Status</Label>
+                      <select
+                        value={selectedSub.status}
+                        onChange={(e) => setSelectedSub({...selectedSub, status: e.target.value})}
+                        className="w-full mt-2 border border-gray-300 rounded-lg px-3 py-2"
+                      >
+                        <option value="Active">Active</option>
+                        <option value="Expired">Expired</option>
+                        <option value="Suspended">Suspended</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <Button type="submit" className="flex-1 bg-[#003366] hover:bg-[#00509E]">
+                      Save Changes
+                    </Button>
+                    <Button type="button" onClick={() => { setShowEdit(false); setSelectedSub(null); }} variant="outline" className="flex-1 border-[#003366] text-[#003366]">
+                      Cancel
+                    </Button>
+                  </div>
+                </form>
+              </CardContent>
+            </Card>
+          </div>
+        )}
       </div>
     </AdminLayout>
   );

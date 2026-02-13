@@ -37,7 +37,6 @@ const menuItems: MenuItem[] = [
     icon: Users,
     children: [
       { label: 'All Customers', path: '/admin/accounts/customers', description: 'Manage customer accounts' },
-      { label: 'Account Details', path: '/admin/accounts/details', description: 'View account information' },
       { label: 'Subscriptions', path: '/admin/billing/subscriptions', description: 'Manage subscriptions' },
     ],
   },

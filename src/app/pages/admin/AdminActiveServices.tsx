@@ -1,14 +1,17 @@
 import { AdminLayout } from '@/app/components/AdminLayout';
-import { Card, CardContent, CardHeader } from '@/app/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/app/components/ui/card';
 import { Button } from '@/app/components/ui/button';
 import { Badge } from '@/app/components/ui/badge';
 import { Input } from '@/app/components/ui/input';
-import { Search, Eye } from 'lucide-react';
+import { Label } from '@/app/components/ui/label';
+import { Search, Edit, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 
 export function AdminActiveServices() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [services] = useState([
+  const [selectedService, setSelectedService] = useState<any>(null);
+  const [showEdit, setShowEdit] = useState(false);
+  const [services, setServices] = useState([
     { id: 'SRV-001', customer: 'Juan Dela Cruz', service: 'Fiber 100 Mbps', status: 'Active', installDate: 'Jan 15, 2025', location: 'Manila' },
     { id: 'SRV-002', customer: 'Maria Santos', service: 'Fiber 200 Mbps', status: 'Active', installDate: 'Feb 1, 2025', location: 'Quezon City' },
     { id: 'SRV-003', customer: 'Pedro Garcia', service: 'Fiber 50 Mbps', status: 'Suspended', installDate: 'Dec 1, 2024', location: 'Makati' },
@@ -19,8 +22,19 @@ export function AdminActiveServices() {
     s.id.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleView = (id: string) => {
-    alert(`View service ${id}`);
+  const handleDelete = (id: string) => {
+    if (confirm('Are you sure you want to delete this service?')) {
+      setServices(services.filter(s => s.id !== id));
+      alert(`Service ${id} deleted!`);
+    }
+  };
+
+  const handleSaveEdit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setServices(services.map(s => s.id === selectedService.id ? selectedService : s));
+    alert('Service updated successfully!');
+    setShowEdit(false);
+    setSelectedService(null);
   };
 
 
@@ -111,9 +125,14 @@ export function AdminActiveServices() {
                         </Badge>
                       </td>
                       <td className="px-4 py-3">
-                        <Button variant="ghost" size="sm" onClick={() => handleView(service.id)}>
-                          <Eye size={16} />
-                        </Button>
+                        <div className="flex items-center gap-2">
+                          <Button variant="ghost" size="sm" onClick={() => { setSelectedService(service); setShowEdit(true); }}>
+                            <Edit size={16} />
+                          </Button>
+                          <Button variant="ghost" size="sm" className="text-red-600" onClick={() => handleDelete(service.id)}>
+                            <Trash2 size={16} />
+                          </Button>
+                        </div>
                       </td>
                     </tr>
                   ))}
@@ -139,8 +158,8 @@ export function AdminActiveServices() {
                       <p>{service.location}</p>
                       <p>Installed: {service.installDate}</p>
                     </div>
-                    <Button variant="ghost" size="sm" onClick={() => handleView(service.id)}>
-                      <Eye size={16} />
+                    <Button variant="ghost" size="sm" onClick={() => { setSelectedService(service); setShowEdit(true); }}>
+                      <Edit size={16} />
                     </Button>
                   </div>
                 </div>
@@ -148,6 +167,75 @@ export function AdminActiveServices() {
             </div>
           </CardContent>
         </Card>
+
+        {showEdit && selectedService && (
+          <div className="fixed inset-0 bg-black/85 flex items-center justify-center z-50 p-4">
+            <Card className="w-full max-w-2xl bg-white max-h-[90vh] overflow-y-auto">
+              <CardHeader>
+                <CardTitle className="text-[#003366]">Manage Service</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleSaveEdit} className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <Label className="text-[#003366] font-semibold">Customer</Label>
+                      <Input
+                        value={selectedService.customer}
+                        onChange={(e) => setSelectedService({...selectedService, customer: e.target.value})}
+                        className="mt-2"
+                        disabled
+                      />
+                    </div>
+                    <div>
+                      <Label className="text-[#003366] font-semibold">Service</Label>
+                      <Input
+                        value={selectedService.service}
+                        onChange={(e) => setSelectedService({...selectedService, service: e.target.value})}
+                        className="mt-2"
+                      />
+                    </div>
+                    <div>
+                      <Label className="text-[#003366] font-semibold">Location</Label>
+                      <Input
+                        value={selectedService.location}
+                        onChange={(e) => setSelectedService({...selectedService, location: e.target.value})}
+                        className="mt-2"
+                      />
+                    </div>
+                    <div>
+                      <Label className="text-[#003366] font-semibold">Install Date</Label>
+                      <Input
+                        value={selectedService.installDate}
+                        onChange={(e) => setSelectedService({...selectedService, installDate: e.target.value})}
+                        className="mt-2"
+                      />
+                    </div>
+                    <div>
+                      <Label className="text-[#003366] font-semibold">Status</Label>
+                      <select
+                        value={selectedService.status}
+                        onChange={(e) => setSelectedService({...selectedService, status: e.target.value})}
+                        className="w-full mt-2 border border-gray-300 rounded-lg px-3 py-2"
+                      >
+                        <option value="Active">Active</option>
+                        <option value="Suspended">Suspended</option>
+                        <option value="Pending">Pending</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <Button type="submit" className="flex-1 bg-[#003366] hover:bg-[#00509E]">
+                      Save Changes
+                    </Button>
+                    <Button type="button" onClick={() => { setShowEdit(false); setSelectedService(null); }} variant="outline" className="flex-1 border-[#003366] text-[#003366]">
+                      Cancel
+                    </Button>
+                  </div>
+                </form>
+              </CardContent>
+            </Card>
+          </div>
+        )}
       </div>
     </AdminLayout>
   );

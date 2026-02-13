@@ -1,5 +1,5 @@
 import { AdminLayout } from '@/app/components/AdminLayout';
-import { Card, CardContent, CardHeader } from '@/app/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/app/components/ui/card';
 import { Button } from '@/app/components/ui/button';
 import { Badge } from '@/app/components/ui/badge';
 import { Input } from '@/app/components/ui/input';
@@ -8,6 +8,8 @@ import { useState } from 'react';
 
 export function AdminInvoices() {
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedInvoice, setSelectedInvoice] = useState<any>(null);
+  const [showView, setShowView] = useState(false);
 
   const invoices = [
     { id: 'INV-2026-001', customer: 'Juan Dela Cruz', amount: '₱1,299.00', dueDate: 'Feb 15, 2026', status: 'Paid', issueDate: 'Jan 15, 2026' },
@@ -29,8 +31,9 @@ export function AdminInvoices() {
     }
   };
 
-  const handleView = (id: string) => {
-    alert(`View invoice ${id}`);
+  const handleView = (invoice: any) => {
+    setSelectedInvoice(invoice);
+    setShowView(true);
   };
 
   const handleDownload = (id: string) => {
@@ -88,7 +91,7 @@ export function AdminInvoices() {
                       </td>
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-2">
-                          <Button variant="ghost" size="sm" onClick={() => handleView(invoice.id)}>
+                          <Button variant="ghost" size="sm" onClick={() => handleView(invoice)}>
                             <Eye size={16} />
                           </Button>
                           <Button variant="ghost" size="sm" onClick={() => handleDownload(invoice.id)}>
@@ -119,7 +122,7 @@ export function AdminInvoices() {
                       <p>Due: {invoice.dueDate}</p>
                     </div>
                     <div className="flex gap-2">
-                      <Button variant="ghost" size="sm" onClick={() => handleView(invoice.id)}>
+                      <Button variant="ghost" size="sm" onClick={() => handleView(invoice)}>
                         <Eye size={16} />
                       </Button>
                       <Button variant="ghost" size="sm" onClick={() => handleDownload(invoice.id)}>
@@ -132,6 +135,53 @@ export function AdminInvoices() {
             </div>
           </CardContent>
         </Card>
+
+        {showView && selectedInvoice && (
+          <div className="fixed inset-0 bg-black/85 flex items-center justify-center z-50 p-4">
+            <Card className="w-full max-w-2xl bg-white max-h-[90vh] overflow-y-auto">
+              <CardHeader>
+                <CardTitle className="text-[#003366]">Invoice Details</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="bg-gray-50 p-6 rounded-lg space-y-3">
+                  <div className="flex justify-between items-center pb-3 border-b">
+                    <span className="text-gray-600">Invoice ID:</span>
+                    <span className="font-mono text-[#003366] font-semibold">{selectedInvoice.id}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Customer:</span>
+                    <span className="font-semibold text-[#003366]">{selectedInvoice.customer}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Amount:</span>
+                    <span className="font-semibold text-[#003366] text-xl">{selectedInvoice.amount}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Issue Date:</span>
+                    <span className="font-semibold text-[#003366]">{selectedInvoice.issueDate}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Due Date:</span>
+                    <span className="font-semibold text-[#003366]">{selectedInvoice.dueDate}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600">Status:</span>
+                    <Badge className={getStatusColor(selectedInvoice.status)}>{selectedInvoice.status}</Badge>
+                  </div>
+                </div>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Button onClick={() => handleDownload(selectedInvoice.id)} className="flex-1 bg-[#003366] hover:bg-[#00509E]">
+                    <Download size={16} className="mr-2" />
+                    Download Invoice
+                  </Button>
+                  <Button onClick={() => { setShowView(false); setSelectedInvoice(null); }} variant="outline" className="flex-1 border-[#003366] text-[#003366]">
+                    Close
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
       </div>
     </AdminLayout>
   );

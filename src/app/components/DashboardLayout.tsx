@@ -79,10 +79,17 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [expandedMenu, setExpandedMenu] = useState<string | null>('Dashboard');
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [showStars, setShowStars] = useState<string | null>(null);
   const location = useLocation();
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
+
+  const notifications = [
+    { id: 1, title: 'Payment Due', message: 'Your bill of ₱1,299.00 is due on Feb 15', path: '/dashboard/account/billing', time: '2 hours ago', unread: true },
+    { id: 2, title: 'Ticket Updated', message: 'Your support ticket #TK-2026-0123 has been updated', path: '/dashboard/support/tickets', time: '5 hours ago', unread: true },
+    { id: 3, title: 'Service Active', message: 'Your Fiber 100 Mbps plan is now active', path: '/dashboard/services/active', time: '1 day ago', unread: false },
+  ];
 
   const toggleMenu = (label: string) => {
     const isOpening = expandedMenu !== label;
@@ -125,10 +132,69 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 
           <div className="flex items-center gap-3">
             {/* Notifications */}
-            <Button variant="ghost" size="sm" className="relative">
-              <Bell size={20} className="text-gray-600" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-[#FDB913] rounded-full"></span>
-            </Button>
+            <div className="relative">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="relative"
+                onClick={() => setIsNotificationOpen(!isNotificationOpen)}
+              >
+                <Bell size={20} className="text-gray-600" />
+                {notifications.some(n => n.unread) && (
+                  <span className="absolute top-1 right-1 w-2 h-2 bg-[#FDB913] rounded-full"></span>
+                )}
+              </Button>
+
+              {isNotificationOpen && (
+                <>
+                  <div
+                    className="fixed inset-0 z-30"
+                    onClick={() => setIsNotificationOpen(false)}
+                  ></div>
+                  <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 z-40 max-h-96 overflow-y-auto">
+                    <div className="px-4 py-3 border-b border-gray-100">
+                      <p className="text-sm font-semibold text-[#003366]">Notifications</p>
+                    </div>
+                    <div className="divide-y divide-gray-100">
+                      {notifications.map((notif) => (
+                        <button
+                          key={notif.id}
+                          onClick={() => {
+                            navigate(notif.path);
+                            setIsNotificationOpen(false);
+                          }}
+                          className={`w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors ${
+                            notif.unread ? 'bg-blue-50' : ''
+                          }`}
+                        >
+                          <div className="flex items-start gap-3">
+                            {notif.unread && (
+                              <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
+                            )}
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm font-semibold text-[#003366] mb-1">{notif.title}</p>
+                              <p className="text-xs text-gray-600 mb-1">{notif.message}</p>
+                              <p className="text-xs text-gray-400">{notif.time}</p>
+                            </div>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                    <div className="px-4 py-3 border-t border-gray-100">
+                      <button 
+                        onClick={() => {
+                          navigate('/dashboard/account/notifications');
+                          setIsNotificationOpen(false);
+                        }}
+                        className="text-sm text-[#003366] hover:text-[#00509E] font-medium"
+                      >
+                        View all notifications
+                      </button>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
 
             {/* Profile Dropdown */}
             <div className="relative">

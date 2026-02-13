@@ -2,6 +2,7 @@ import { AdminLayout } from '@/app/components/AdminLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/app/components/ui/card';
 import { Button } from '@/app/components/ui/button';
 import { Input } from '@/app/components/ui/input';
+import { Label } from '@/app/components/ui/label';
 import { Badge } from '@/app/components/ui/badge';
 import { Search, Eye, Edit, Trash2, MoreVertical } from 'lucide-react';
 import { useState } from 'react';
@@ -11,13 +12,13 @@ export function AdminCustomers() {
   const [selectedCustomer, setSelectedCustomer] = useState<any>(null);
   const [showDetails, setShowDetails] = useState(false);
   const [showActions, setShowActions] = useState<string | null>(null);
-
-  const customers = [
+  const [showEdit, setShowEdit] = useState(false);
+  const [customers, setCustomers] = useState([
     { id: 'CUST-001', name: 'Juan Dela Cruz', email: 'juan@example.com', plan: 'Fiber 100 Mbps', status: 'Active', balance: '₱0.00' },
     { id: 'CUST-002', name: 'Maria Santos', email: 'maria@example.com', plan: 'Fiber 200 Mbps', status: 'Active', balance: '₱1,299.00' },
     { id: 'CUST-003', name: 'Pedro Garcia', email: 'pedro@example.com', plan: 'Fiber 50 Mbps', status: 'Suspended', balance: '₱2,598.00' },
     { id: 'CUST-004', name: 'Ana Reyes', email: 'ana@example.com', plan: 'Fiber 100 Mbps', status: 'Active', balance: '₱0.00' },
-  ];
+  ]);
 
   const filteredCustomers = customers.filter(c => 
     c.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -32,8 +33,18 @@ export function AdminCustomers() {
 
   const handleDelete = (id: string) => {
     if (confirm('Are you sure you want to delete this customer?')) {
+      setCustomers(customers.filter(c => c.id !== id));
+      setShowActions(null);
       alert(`Customer ${id} deleted!`);
     }
+  };
+
+  const handleSaveEdit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setCustomers(customers.map(c => c.id === selectedCustomer.id ? selectedCustomer : c));
+    alert('Customer updated successfully!');
+    setShowEdit(false);
+    setSelectedCustomer(null);
   };
 
   return (
@@ -90,7 +101,7 @@ export function AdminCustomers() {
                           <Button variant="ghost" size="sm" onClick={() => handleViewDetails(customer)}>
                             <Eye size={16} />
                           </Button>
-                          <Button variant="ghost" size="sm">
+                          <Button variant="ghost" size="sm" onClick={() => { setSelectedCustomer(customer); setShowEdit(true); }}>
                             <Edit size={16} />
                           </Button>
                           <Button variant="ghost" size="sm" className="text-red-600" onClick={() => handleDelete(customer.id)}>
@@ -106,7 +117,7 @@ export function AdminCustomers() {
                               <button onClick={() => { handleViewDetails(customer); setShowActions(null); }} className="w-full px-4 py-2 text-left text-sm hover:bg-gray-50 flex items-center gap-2">
                                 <Eye size={14} /> View
                               </button>
-                              <button onClick={() => setShowActions(null)} className="w-full px-4 py-2 text-left text-sm hover:bg-gray-50 flex items-center gap-2">
+                              <button onClick={() => { setSelectedCustomer(customer); setShowEdit(true); setShowActions(null); }} className="w-full px-4 py-2 text-left text-sm hover:bg-gray-50 flex items-center gap-2">
                                 <Edit size={14} /> Edit
                               </button>
                               <button onClick={() => { handleDelete(customer.id); setShowActions(null); }} className="w-full px-4 py-2 text-left text-sm hover:bg-gray-50 flex items-center gap-2 text-red-600">
@@ -162,6 +173,65 @@ export function AdminCustomers() {
                 <Button onClick={() => setShowDetails(false)} className="w-full bg-[#003366] hover:bg-[#00509E]">
                   Close
                 </Button>
+              </CardContent>
+            </Card>
+          </div>
+        )}
+
+        {showEdit && selectedCustomer && (
+          <div className="fixed inset-0 bg-black/85 flex items-center justify-center z-50 p-4">
+            <Card className="w-full max-w-2xl bg-white max-h-[90vh] overflow-y-auto">
+              <CardHeader>
+                <CardTitle className="text-[#003366]">Edit Customer</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleSaveEdit} className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <Label className="text-[#003366] font-semibold">Name</Label>
+                      <Input
+                        value={selectedCustomer.name}
+                        onChange={(e) => setSelectedCustomer({...selectedCustomer, name: e.target.value})}
+                        className="mt-2"
+                      />
+                    </div>
+                    <div>
+                      <Label className="text-[#003366] font-semibold">Email</Label>
+                      <Input
+                        value={selectedCustomer.email}
+                        onChange={(e) => setSelectedCustomer({...selectedCustomer, email: e.target.value})}
+                        className="mt-2"
+                      />
+                    </div>
+                    <div>
+                      <Label className="text-[#003366] font-semibold">Plan</Label>
+                      <Input
+                        value={selectedCustomer.plan}
+                        onChange={(e) => setSelectedCustomer({...selectedCustomer, plan: e.target.value})}
+                        className="mt-2"
+                      />
+                    </div>
+                    <div>
+                      <Label className="text-[#003366] font-semibold">Status</Label>
+                      <select
+                        value={selectedCustomer.status}
+                        onChange={(e) => setSelectedCustomer({...selectedCustomer, status: e.target.value})}
+                        className="w-full mt-2 border border-gray-300 rounded-lg px-3 py-2"
+                      >
+                        <option value="Active">Active</option>
+                        <option value="Suspended">Suspended</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <Button type="submit" className="flex-1 bg-[#003366] hover:bg-[#00509E]">
+                      Save Changes
+                    </Button>
+                    <Button type="button" onClick={() => { setShowEdit(false); setSelectedCustomer(null); }} variant="outline" className="flex-1 border-[#003366] text-[#003366]">
+                      Cancel
+                    </Button>
+                  </div>
+                </form>
               </CardContent>
             </Card>
           </div>

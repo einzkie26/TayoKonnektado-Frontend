@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@/app/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/app/components/ui/card';
-import { Clock, Users, Zap, CheckCircle, CreditCard, Headphones, Bell, Settings, BarChart } from 'lucide-react';
+import { Clock, Users, Zap, CheckCircle, CreditCard, Headphones, Bell, Settings, BarChart, ArrowUp } from 'lucide-react';
 import { ScrollFade } from '@/app/components/ScrollFade';
 import { api } from '@/services/api';
 import { useEffect, useState } from 'react';
@@ -12,9 +12,13 @@ import tumbleweed from '@/assets/tumbleweed.png';
 
 export function Home() {
   const [scrollY, setScrollY] = useState(0);
+  const [showBackToTop, setShowBackToTop] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+      setShowBackToTop(window.scrollY > 300);
+    };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -369,6 +373,16 @@ export function Home() {
         </div>
       </section>
       </ScrollFade>
+
+      {/* Back to Top Button */}
+      {showBackToTop && (
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="fixed bottom-8 right-8 w-12 h-12 bg-[#003366] hover:bg-[#00509E] text-white rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110 z-50"
+        >
+          <ArrowUp size={24} />
+        </button>
+      )}
 
     </div>
   );

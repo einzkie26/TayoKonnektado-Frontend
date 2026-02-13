@@ -9,16 +9,37 @@ import { useState } from 'react';
 export function Billing() {
   const [showPayNow, setShowPayNow] = useState(false);
   const [showAddPayment, setShowAddPayment] = useState(false);
+  const [showGCashPayment, setShowGCashPayment] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('');
   const [autoPay, setAutoPay] = useState(false);
+  const [gcashNumber, setGcashNumber] = useState('');
+  const [gcashPin, setGcashPin] = useState('');
 
   const handlePayNow = () => {
     if (!paymentMethod) {
       alert('Please select a payment method');
       return;
     }
-    alert('Payment of ₱1,299.00 processed successfully!');
-    setShowPayNow(false);
+    if (paymentMethod === 'gcash') {
+      setShowPayNow(false);
+      setShowGCashPayment(true);
+    } else {
+      alert('Payment of ₱1,299.00 processed successfully!');
+      setShowPayNow(false);
+      setPaymentMethod('');
+    }
+  };
+
+  const handleGCashPayment = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!gcashNumber || !gcashPin) {
+      alert('Please fill in all fields');
+      return;
+    }
+    alert('Payment of ₱1,299.00 via GCash processed successfully!');
+    setShowGCashPayment(false);
+    setGcashNumber('');
+    setGcashPin('');
     setPaymentMethod('');
   };
 
@@ -334,6 +355,65 @@ export function Billing() {
                   Cancel
                 </Button>
               </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+      {/* GCash Payment Modal */}
+      {showGCashPayment && (
+        <div className="fixed inset-0 bg-black/85 flex items-center justify-center z-50 p-4">
+          <Card className="w-full max-w-md bg-white max-h-[90vh] overflow-y-auto">
+            <CardHeader>
+              <CardTitle className="text-[#003366] flex items-center gap-2">
+                <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center text-white font-bold text-xl">G</div>
+                GCash Payment
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleGCashPayment} className="space-y-4">
+                <div className="bg-blue-50 p-4 rounded-lg text-center">
+                  <p className="text-sm text-gray-600 mb-1">Amount to Pay</p>
+                  <p className="text-3xl font-bold text-[#003366]">₱1,299.00</p>
+                </div>
+                <div>
+                  <Label htmlFor="gcashNumber" className="text-[#003366] font-semibold">GCash Mobile Number</Label>
+                  <Input
+                    id="gcashNumber"
+                    type="tel"
+                    placeholder="09XX XXX XXXX"
+                    className="mt-2"
+                    value={gcashNumber}
+                    onChange={(e) => setGcashNumber(e.target.value)}
+                    required
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="gcashPin" className="text-[#003366] font-semibold">GCash MPIN</Label>
+                  <Input
+                    id="gcashPin"
+                    type="password"
+                    placeholder="Enter your 4-digit MPIN"
+                    className="mt-2"
+                    maxLength={4}
+                    value={gcashPin}
+                    onChange={(e) => setGcashPin(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+                  <p className="text-xs text-gray-700">
+                    <strong>Note:</strong> You will receive an OTP on your registered mobile number to confirm this transaction.
+                  </p>
+                </div>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Button type="submit" className="flex-1 bg-blue-500 hover:bg-blue-600">
+                    Pay Now
+                  </Button>
+                  <Button type="button" onClick={() => { setShowGCashPayment(false); setGcashNumber(''); setGcashPin(''); }} variant="outline" className="flex-1 border-[#003366] text-[#003366]">
+                    Cancel
+                  </Button>
+                </div>
+              </form>
             </CardContent>
           </Card>
         </div>
